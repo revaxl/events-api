@@ -23,6 +23,8 @@ COPY . /app
 COPY --from=vendor /app/vendor/ /app/vendor/
 RUN composer dumpautoload
 
+COPY .env.example .env
+
 # Start the php server
 CMD php -S 0.0.0.0:8000 -t /app/public
 EXPOSE 8000
