@@ -25,6 +25,9 @@ RUN composer dumpautoload
 
 COPY .env.example .env
 
+RUN touch /app/database/database.sqlite
+RUN php artisan migrate && php artisan db:seed
+
 # Start the php server
 CMD php -S 0.0.0.0:8000 -t /app/public
 EXPOSE 8000
