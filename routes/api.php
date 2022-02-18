@@ -17,6 +17,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('/', 'EventController@index');
         $router->post('{eventId}/reservation', 'EventController@reserve');
         $router->put('{eventId}/reservation', 'EventController@update');
-        $router->post('{eventId}/cancel', 'EventController@cancel');
+        $router->delete('{eventId}/cancel', 'EventController@cancel');
     });
 });
