@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(EventTableSeeder::class);
+         $this->call([
+             EventTableSeeder::class,
+             UserTableSeeder::class
+         ]);
     }
 }
