@@ -1,24 +1,22 @@
-# Lumen PHP Framework
+# Events API
+## How to run:
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+- Clone the project : `git clone https://github.com/revaxl/events-api.git`
+- Build the docker image : `docker build -t events-api .`
+- Run the docker image : `docker run -p 8000:8000 events-api`
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Accessible URLS:
+**All REQUESTS SHOULD HAVE `Accept: application/json` IN THE HEADER** 
+- List events : `GET http://localhost:8000/api/events`
 
-## Official Documentation
+- Create new Reservation for event: `POST http://localhost:8000/api/events/<event id>/reservation`
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+  - Data required in the request body : `user_id: <integer>, reservations: <integer>`
 
-## Contributing
+- Update Reservation for event: `PUT http://localhost:8000/api/events/<event id>/reservation`
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - Data required in the request body : `user_id: <integer>, reservations: <integer>`
 
-## Security Vulnerabilities
+- Cancel Reservation for event: `DELETE http://localhost:8000/api/events/<event id>/cancel`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    - Data required in the request body : `user_id: <integer>`
