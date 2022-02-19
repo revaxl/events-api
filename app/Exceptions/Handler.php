@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Enums\ResponseCode;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
@@ -52,15 +53,36 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ValidationException) {
             $response = array_merge([
+                'code' => ResponseCode::INVALID_DATA,
                 'message' => $exception->getMessage(),
             ], $exception->errors());
             return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         if ($exception instanceof ModelNotFoundException) {
-            return response()->json(['message' => __('response.not_found')], Response::HTTP_BAD_REQUEST);
+            return response()->json([
+                'code' => ResponseCode::NO_DATA_FOUND,
+                'message' => __('response.not_found'),
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        return response()->json(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        if ($exception instanceof BiggerThanTicketLimitException) {
+            return response()->json([
+                'code' => ResponseCode::RESERVATIONS_BIGGER_THAN_ALLOWED,
+                'message' => $exception->getMessage(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($exception instanceof NoAvailableTicketException) {
+            return response()->json([
+                'code' => ResponseCode::NO_MORE_TICKETS,
+                'message' => $exception->getMessage(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'code' => ResponseCode::GENERAL_EXCEPTION,
+            'message' => $exception->getMessage(),
+        ], Response::HTTP_BAD_REQUEST);
     }
 }
