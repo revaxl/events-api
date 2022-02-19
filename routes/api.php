@@ -12,6 +12,11 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+// redirect from / to /api/events
+$router->get('/', function () {
+    return redirect('api/events');
+});
+
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'events'], function () use ($router) {
         $router->get('/', 'EventController@index');
